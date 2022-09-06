@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src --ext .ts --fix",
+    "prettify": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "compress": "rm -rf **/*.min.js && npx uglifyjs-folder dist -o dist -e -x .min.js"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
+    "eslint": "^8.23.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.2",
+    "uglifyjs-folder": "^3.1.3"
+  }
+}
