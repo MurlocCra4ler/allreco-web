@@ -1,3 +1,5 @@
+import Cookies, { CookiesOption } from "cookies-ts"
+
 const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
 const overlay = document.getElementById('blocking-overlay');
@@ -60,10 +62,16 @@ if (globe) {
   });
 }
 
+const cookies = new Cookies()
+
 document.getElementById('lang-de')?.addEventListener('click', function () {
-  document.cookie = 'lang=de';
+  cookies.set('lang', 'de');
+  const event = new Event('langchange');
+  document.dispatchEvent(event);
 });
 
 document.getElementById('lang-en')?.addEventListener('click', function () {
-  document.cookie = 'lang=en';
+  cookies.set('lang', 'en');
+  const event = new Event('langchange');
+  document.dispatchEvent(event);
 });
