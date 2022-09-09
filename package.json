@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "prepare": "husky install",
     "lint": "gulp lint",
     "build": "gulp build && gulp distribute && gulp clean-build",
     "compress": "gulp clean-compressed && gulp compress"
@@ -19,6 +20,7 @@
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^6.0.0-alpha.1",
     "gulp-uglify": "^3.0.2",
+    "husky": "^8.0.1",
     "typescript": "^4.8.2"
   },
   "dependencies": {

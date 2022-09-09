@@ -6,14 +6,14 @@ const routes: Array<[string, string]> = [
 const cookies = new Cookies()
 const lang = cookies.get('lang');
 
-if (!!lang) {
+if (lang) {
   onLangchange(lang);
 }
 
 document.addEventListener('langchange', () => {
   const lang = cookies.get('lang');
 
-  if (!!lang) {
+  if (lang) {
     onLangchange(lang);
   }
 });
@@ -23,14 +23,14 @@ function onLangchange(lang: string): void {
 
   switch (lang) {
     case 'de':
-      for (let [urlDE, urlEN] of routes) {
+      for (const [urlDE, urlEN] of routes) {
         if (urlEN === url) {
           window.location.replace(urlDE);
         }
       }
       break;
     case 'en':
-      for (let [urlDE, urlEN] of routes) {
+      for (const [urlDE, urlEN] of routes) {
         if (urlDE === url) {
           window.location.replace(urlEN);
         }

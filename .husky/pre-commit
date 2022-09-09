@@ -1,0 +1,41 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+exit_status=$?
+
+echo "\nLinting .ts files...\n\n"
+npx gulp lint
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+echo "\nBuilding .js files...\n\n"
+npx gulp build
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+npx gulp distribute
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+npx gulp clean-build
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+echo "\nCompressing .js files...\n\n"
+npx gulp clean-compressed
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+npx gulp compress
+if [ $exit_status -eq 1 ]; then
+  exit 1
+fi
+
+echo "\nEverything is awesome :)\n\n" 
+touch .commit 
+exit
