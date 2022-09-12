@@ -9,7 +9,7 @@ const babelify = require('babelify');
 
 
 const srcFiles = 'src/**/*.ts';
-const buildFiles = 'build/**/*.js';
+const buildFiles = 'build/*.js';
 const distFiles = 'dist/**/*.js';
 const compFiles = 'dist/**/*.min.js';
 
@@ -34,7 +34,9 @@ gulp.task('build', function() {
 gulp.task('distribute', async function() {
   return gulp.src(buildFiles)
     .pipe(browserify({
-      transform: babelify
+      transform: babelify.configure({
+        presets: ['@babel/preset-env']
+      })
     }))
     .pipe(gulp.dest(distDir))
 });

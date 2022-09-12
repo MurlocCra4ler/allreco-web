@@ -1,4 +1,4 @@
-import Cookies, { CookiesOption } from "cookies-ts"
+import { setCookie } from "./shared/cookies";
 
 const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
@@ -62,16 +62,15 @@ if (globe) {
   });
 }
 
-const cookies = new Cookies()
-
 document.getElementById('lang-de')?.addEventListener('click', function () {
-  cookies.set('lang', 'de');
+  setCookie('lang', 'de');
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });
 
 document.getElementById('lang-en')?.addEventListener('click', function () {
-  cookies.set('lang', 'en');
+  setCookie('lang', 'en');
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });
+

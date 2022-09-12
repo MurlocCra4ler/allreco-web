@@ -1,17 +1,19 @@
-import Cookies from "cookies-ts"
- 
+import { getCookie, setCookie } from "./shared/cookies";
+
 const routes: Array<[string, string]> = [
   ['https://allreco.webflow.io/bst', 'https://allreco.webflow.io/en/bst'],
 ];
-const cookies = new Cookies()
-const lang = cookies.get('lang');
+
+setCookie('lang', 'de');
+const lang = getCookie('lang');
+console.log(lang);
 
 if (lang) {
   onLangchange(lang);
 }
 
 document.addEventListener('langchange', () => {
-  const lang = cookies.get('lang');
+  const lang = getCookie('lang');
 
   if (lang) {
     onLangchange(lang);
