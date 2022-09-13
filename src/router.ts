@@ -26,15 +26,15 @@ function onLangchange(lang: string): void {
   switch (lang) {
     case 'de':
       for (const [urlDE, urlEN] of routes) {
-        if (urlEN === url) {
-          window.location.replace(urlDE);
+        if (urlDE === url) {
+          window.location.replace(urlEN);
         }
       }
       break;
     case 'en':
       for (const [urlDE, urlEN] of routes) {
-        if (urlDE === url) {
-          window.location.replace(urlEN);
+        if (urlEN === url) {
+          window.location.replace(urlDE);
         }
       }
       break;
