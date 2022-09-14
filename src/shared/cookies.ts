@@ -44,3 +44,7 @@ export function setCookie(name: string, value: string, options: Options = {}): v
 
   document.cookie = cookieString;
 }
+
+export function removeCookie(name: string) {
+  document.cookie = `${name}=;expires=${new Date(0).toUTCString()};max-age=-99999999`;
+}

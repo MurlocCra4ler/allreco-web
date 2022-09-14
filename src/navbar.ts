@@ -1,4 +1,4 @@
-import { setCookie } from "./shared/cookies";
+import { removeCookie, setCookie } from "./shared/cookies";
 
 const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
@@ -63,12 +63,14 @@ if (globe) {
 }
 
 document.getElementById('lang-de')?.addEventListener('click', function () {
+  removeCookie('lang');
   setCookie('lang', 'de');
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });
 
 document.getElementById('lang-en')?.addEventListener('click', function () {
+  removeCookie('lang');
   setCookie('lang', 'en');
   const event = new Event('langchange');
   document.dispatchEvent(event);

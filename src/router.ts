@@ -1,12 +1,11 @@
 import { getCookie, setCookie } from "./shared/cookies";
 
 const routes: Array<[string, string]> = [
-  ['https://allreco.webflow.io/bst', 'https://allreco.webflow.io/en/bst'],
+  ['https://www.allreco.de/bst', 'https://www.allreco.de/en/bst']
 ];
 
 setCookie('lang', 'de');
 const lang = getCookie('lang');
-console.log(lang);
 
 if (lang) {
   onLangchange(lang);
