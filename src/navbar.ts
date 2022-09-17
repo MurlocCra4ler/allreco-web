@@ -1,4 +1,7 @@
+import { Observable } from "rxjs";
+import { animateElement, Animation, AnimationName } from "./shared/animate";
 import { removeCookie, setCookie } from "./shared/cookies";
+import { getOnscroll$ } from "./shared/window-events";
 
 const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
@@ -15,12 +18,14 @@ if (menu && dropdown && overlay) {
       menu.classList.add('toggled');
       dropdown.classList.add('toggled');
       overlay.classList.add('toggled');
+      animateElement(dropdown, new Animation(AnimationName.SlideInRight));
     }
 
     toggled = !toggled;
   });
 
-  document.addEventListener('scroll', function () {
+  const onscroll$: Observable<Event> = getOnscroll$();
+  onscroll$.subscribe(() => {
     if (toggled) {
       menu.classList.remove('toggled');
       dropdown.classList.remove('toggled');
