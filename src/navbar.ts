@@ -24,6 +24,15 @@ if (menu && dropdown && overlay) {
     toggled = !toggled;
   });
 
+  overlay.addEventListener('click', function() {
+    if (toggled) {
+      menu.classList.remove('toggled');
+      dropdown.classList.remove('toggled');
+      overlay.classList.remove('toggled');
+      toggled = false;
+    }
+  })
+
   const onscroll$: Observable<Event> = getOnscroll$();
   onscroll$.subscribe(() => {
     if (toggled) {
