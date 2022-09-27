@@ -1,6 +1,6 @@
 import { Observable } from "rxjs";
 import { animateElement, Animation, AnimationName } from "./shared/animate";
-import { removeCookie, setCookie } from "./shared/cookies";
+import { removeCookie, setCookie, Options } from "./shared/cookies";
 import { getOnscroll$ } from "./shared/window-events";
 
 const menu = document.getElementById('menu');
@@ -76,16 +76,21 @@ if (globe) {
   });
 }
 
+const options: Options = { 
+  path: '/',
+  expires: new Date().getTime()+1000*60*60*24*365,
+};
+
 document.getElementById('lang-de')?.addEventListener('click', function () {
   removeCookie('lang');
-  setCookie('lang', 'de');
+  setCookie('lang', 'de', options);
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });
 
 document.getElementById('lang-en')?.addEventListener('click', function () {
   removeCookie('lang');
-  setCookie('lang', 'en');
+  setCookie('lang', 'en', options);
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });

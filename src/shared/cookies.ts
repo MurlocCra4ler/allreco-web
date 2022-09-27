@@ -1,4 +1,4 @@
-type Options = {
+export type Options = {
   expires?: number | Date
   maxAge?: number
   path?: string

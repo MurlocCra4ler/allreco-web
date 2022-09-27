@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "./shared/cookies";
+import { getCookie } from "./shared/cookies";
 
 const routes: Array<[string, string]> = [
   ['https://www.allreco.de/', 'https://www.allreco.de/en/home'],
@@ -23,7 +23,6 @@ const routes: Array<[string, string]> = [
   ['https://www.allreco.de/impressum', 'https://www.allreco.de/en/imprint']
 ];
 
-setCookie('lang', 'de');
 const lang = getCookie('lang');
 
 if (lang) {
@@ -44,15 +43,15 @@ function onLangchange(lang: string): void {
   switch (lang) {
     case 'de':
       for (const [urlDE, urlEN] of routes) {
-        if (urlDE === url) {
-          window.location.replace(urlEN);
+        if (url === urlEN) {
+          window.location.replace(urlDE);
         }
       }
       break;
     case 'en':
       for (const [urlDE, urlEN] of routes) {
-        if (urlEN === url) {
-          window.location.replace(urlDE);
+        if (url === urlDE) {
+          window.location.replace(urlEN);
         }
       }
       break;
