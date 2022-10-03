@@ -1,3 +1,4 @@
+import { Callbacks } from "jquery";
 import { Observable } from "rxjs";
 import { animateElement, Animation, AnimationName } from "./shared/animate";
 import { removeCookie, setCookie, Options } from "./shared/cookies";
@@ -12,13 +13,19 @@ if (menu && dropdown && overlay) {
   menu.addEventListener('click', function () {
     if (toggled) {
       menu.classList.remove('toggled');
-      dropdown.classList.remove('toggled');
       overlay.classList.remove('toggled');
+      animateElement(dropdown, new Animation(AnimationName.SlideOutRight,undefined, undefined,undefined,()=>{
+        dropdown.classList.remove('toggled');
+      }));
+      animateElement(overlay, new Animation(AnimationName.FadeOut,undefined, undefined,undefined,()=>{
+        overlay.classList.remove('toggled');
+      }));
     } else {
       menu.classList.add('toggled');
       dropdown.classList.add('toggled');
       overlay.classList.add('toggled');
       animateElement(dropdown, new Animation(AnimationName.SlideInRight));
+      animateElement(overlay, new Animation(AnimationName.FadeIn));
     }
 
     toggled = !toggled;
