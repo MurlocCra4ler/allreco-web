@@ -8,24 +8,42 @@ const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
 const overlay = document.getElementById('blocking-overlay');
 let toggled = false;
+let inOverlayAnimation = false;
+let inDropdownAnimation = false; 
 
 if (menu && dropdown && overlay) {
   menu.addEventListener('click', function () {
+    if (inOverlayAnimation || inDropdownAnimation) {
+      return;
+    }
+
+    inOverlayAnimation = true;
+    inDropdownAnimation = true;
+
     if (toggled) {
       menu.classList.remove('toggled');
-      overlay.classList.remove('toggled');
-      animateElement(dropdown, new Animation(AnimationName.SlideOutRight,undefined, undefined,undefined,()=>{
+
+      animateElement(dropdown, new Animation(AnimationName.SlideOutRight, undefined, undefined, undefined, () => {
         dropdown.classList.remove('toggled');
+        inDropdownAnimation = false;
       }));
-      animateElement(overlay, new Animation(AnimationName.FadeOut,undefined, undefined,undefined,()=>{
+
+      animateElement(overlay, new Animation(AnimationName.FadeOut, undefined, undefined, undefined, () => {
         overlay.classList.remove('toggled');
+        inOverlayAnimation = false;
       }));
     } else {
       menu.classList.add('toggled');
       dropdown.classList.add('toggled');
       overlay.classList.add('toggled');
-      animateElement(dropdown, new Animation(AnimationName.SlideInRight));
-      animateElement(overlay, new Animation(AnimationName.FadeIn));
+
+      animateElement(dropdown, new Animation(AnimationName.SlideInRight, undefined, undefined, undefined, () => {
+        inDropdownAnimation = false;
+      }));
+
+      animateElement(overlay, new Animation(AnimationName.FadeIn, undefined, undefined, undefined, () => {
+        inOverlayAnimation = false;
+      }));
     }
 
     toggled = !toggled;
