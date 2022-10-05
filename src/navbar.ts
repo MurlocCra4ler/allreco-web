@@ -75,8 +75,9 @@ const logout = document.getElementById('logout');
 declare let MemberStack: any;
 
 if (login && logout) {
-  MemberStack.onReady.then(function (member: any) {
-    if (member.loggedIn) {
+  const memberstack = (window as any).$memberstackDom;
+  memberstack.getCurrentMember().then(({ data: member }: any) => {
+    if (member) {
       login.style.display = 'none';
       logout.style.display = 'flex';
     } else {
