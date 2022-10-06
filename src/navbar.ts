@@ -9,70 +9,70 @@ const dropdown = document.getElementById('dropdown');
 const overlay = document.getElementById('blocking-overlay');
 let toggled = false;
 let inOverlayAnimation = false;
-let inDropdownAnimation = false; 
+let inDropdownAnimation = false;
 
-if (menu && dropdown && overlay) {
+if (menu && overlay) {
   menu.addEventListener('click', function () {
-    if (inOverlayAnimation || inDropdownAnimation) {
-      return;
-    }
-
-    inOverlayAnimation = true;
-    inDropdownAnimation = true;
-
-    if (toggled) {
-      menu.classList.remove('toggled');
-
-      animateElement(dropdown, new Animation(AnimationName.SlideOutRight, undefined, undefined, undefined, () => {
-        dropdown.classList.remove('toggled');
-        inDropdownAnimation = false;
-      }));
-
-      animateElement(overlay, new Animation(AnimationName.FadeOut, undefined, undefined, undefined, () => {
-        overlay.classList.remove('toggled');
-        inOverlayAnimation = false;
-      }));
-    } else {
-      menu.classList.add('toggled');
-      dropdown.classList.add('toggled');
-      overlay.classList.add('toggled');
-
-      animateElement(dropdown, new Animation(AnimationName.SlideInRight, undefined, undefined, undefined, () => {
-        inDropdownAnimation = false;
-      }));
-
-      animateElement(overlay, new Animation(AnimationName.FadeIn, undefined, undefined, undefined, () => {
-        inOverlayAnimation = false;
-      }));
-    }
-
-    toggled = !toggled;
+    toggleSidebar();
   });
 
   overlay.addEventListener('click', function() {
     if (toggled) {
-      menu.classList.remove('toggled');
-      dropdown.classList.remove('toggled');
-      overlay.classList.remove('toggled');
-      toggled = false;
+      toggleSidebar();
     }
   })
 
   const onscroll$: Observable<Event> = getOnscroll$();
   onscroll$.subscribe(() => {
     if (toggled) {
-      menu.classList.remove('toggled');
-      dropdown.classList.remove('toggled');
-      overlay.classList.remove('toggled');
-      toggled = false;
+      toggleSidebar();
     }
   });
 }
 
+function toggleSidebar(): void {
+  if (!menu || !dropdown || !overlay) {
+    return;
+  }
+
+  if (inOverlayAnimation || inDropdownAnimation) {
+    return;
+  }
+
+  inOverlayAnimation = true;
+  inDropdownAnimation = true;
+
+  if (toggled) {
+    menu.classList.remove('toggled');
+
+    animateElement(dropdown, new Animation(AnimationName.SlideOutRight, undefined, undefined, undefined, () => {
+      dropdown.classList.remove('toggled');
+      inDropdownAnimation = false;
+    }));
+
+    animateElement(overlay, new Animation(AnimationName.FadeOut, undefined, undefined, undefined, () => {
+      overlay.classList.remove('toggled');
+      inOverlayAnimation = false;
+    }));
+  } else {
+    menu.classList.add('toggled');
+    dropdown.classList.add('toggled');
+    overlay.classList.add('toggled');
+
+    animateElement(dropdown, new Animation(AnimationName.SlideInRight, undefined, undefined, undefined, () => {
+      inDropdownAnimation = false;
+    }));
+
+    animateElement(overlay, new Animation(AnimationName.FadeIn, undefined, undefined, undefined, () => {
+      inOverlayAnimation = false;
+    }));
+  }
+
+  toggled = !toggled;
+}
+
 const login = document.getElementById('login');
 const logout = document.getElementById('logout');
-
-declare let MemberStack: any;
 
 if (login && logout) {
   const memberstack = (window as any).$memberstackDom;
