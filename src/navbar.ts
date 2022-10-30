@@ -1,8 +1,8 @@
-import { Callbacks } from "jquery";
 import { Observable } from "rxjs";
 import { animateElement, Animation, AnimationName } from "./shared/animate";
 import { removeCookie, setCookie, Options } from "./shared/cookies";
-import { getOnscroll$ } from "./shared/window-events";
+import { getOnscroll$, getOnresize$ } from "./shared/window-events";
+import { enableBodyScroll, disableBodyScroll } from "./shared/window-functions";
 
 const menu = document.getElementById('menu');
 const dropdown = document.getElementById('dropdown');
@@ -10,6 +10,16 @@ const overlay = document.getElementById('blocking-overlay');
 let toggled = false;
 let inOverlayAnimation = false;
 let inDropdownAnimation = false;
+
+const onresize$: Observable<Event> = getOnresize$();
+onresize$.subscribe(() => {
+  if (toggled && window.innerHeight < 687) {
+    disableBodyScroll();
+    return;
+  }
+
+  enableBodyScroll();
+});
 
 if (menu && overlay) {
   menu.addEventListener('click', function () {
@@ -54,6 +64,8 @@ function toggleSidebar(): void {
       overlay.classList.remove('toggled');
       inOverlayAnimation = false;
     }));
+
+    enableBodyScroll();
   } else {
     menu.classList.add('toggled');
     dropdown.classList.add('toggled');
@@ -66,8 +78,11 @@ function toggleSidebar(): void {
     animateElement(overlay, new Animation(AnimationName.FadeIn, undefined, undefined, undefined, () => {
       inOverlayAnimation = false;
     }));
-  }
 
+    if (window.innerHeight < 687) {
+      disableBodyScroll();
+    }
+  }
   toggled = !toggled;
 }
 
@@ -120,4 +135,3 @@ document.getElementById('lang-en')?.addEventListener('click', function () {
   const event = new Event('langchange');
   document.dispatchEvent(event);
 });
-
