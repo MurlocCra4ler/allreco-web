@@ -1,4 +1,4 @@
-import { animateElement, Animation, AnimationName } from "./shared/animate";
+import { animateElement, Animation, AnimationName, AnimationDuration } from "./shared/animate";
 
 //delete all empty <p>s
 const ps = document.getElementsByTagName("p");
@@ -349,16 +349,67 @@ function onToggle(event: Event) {
         console.error('onToggle: event target is missing');
         return;
     }
-    
+
     const element = event.target as any;
-    if (!element.toggled) {
-        element.toggled = true;
-        element.parentElement.classList.add("toggled");
+    element.activeAnimations = element.activeAnimations == null ? 0 : element.activeAnimations;
+
+    if (element.activeAnimations != 0) {
+        console.log('onToggle: has still running animations');
         return;
     }
 
-    element.toggled = false;
-    element.parentElement.classList.remove("toggled");
+    const contentContainers = (event.target as HTMLElement).parentElement?.getElementsByClassName('vendor-content-container');
+    if (!contentContainers) {
+        console.error('onToggle: content containers not found');
+        return;
+    }
+
+    const minus = ((event.target as HTMLElement).getElementsByClassName('minus')[0] as HTMLElement);
+
+    if (!element.toggled) {
+        element.toggled = true;
+        element.parentElement.classList.add("toggled");
+        element.activeAnimations += 1;
+
+        animateElement(minus, new Animation(AnimationName.CustomPlusToMinus, undefined, undefined, AnimationDuration.Faster, () => {
+            element.activeAnimations -= 1;
+            minus.style.display = 'none';
+        }));
+
+        Array.from(contentContainers).forEach(contentContainer => {
+            element.activeAnimations += 1;
+
+            animateElement(contentContainer, new Animation(AnimationName.FadeIn, undefined, undefined, undefined, () => {
+                element.activeAnimations -= 1;
+            }));
+        });
+
+    } else {
+        element.activeAnimations += 1;
+        minus.style.display = 'block';
+
+        animateElement(minus, new Animation(AnimationName.CustomMinusToPlus, undefined, undefined, AnimationDuration.Faster, () => {
+            element.activeAnimations -= 1;
+
+            if (element.activeAnimations == 0) {
+                element.toggled = false;
+                element.parentElement.classList.remove("toggled");
+            }
+        }));
+
+        Array.from(contentContainers).forEach(contentContainer => {
+            element.activeAnimations += 1;
+
+            animateElement(contentContainer, new Animation(AnimationName.FadeOut, undefined, undefined, undefined, () => {
+                element.activeAnimations -= 1;
+
+                if (element.activeAnimations == 0) {
+                    element.toggled = false;
+                    element.parentElement.classList.remove("toggled");
+                }
+            }));
+        });
+    }   
 }
 
 const vendorCategories = document.getElementsByClassName('vendor-category');

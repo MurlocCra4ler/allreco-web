@@ -73,16 +73,18 @@ export enum AnimationName {
   SlideOutLeft = "slideOutLeft",
   SlideOutRight = "slideOutRight",
   SlideOutUp = "slideOutUp",
+  CustomPlusToMinus = "customPlusToMinus",
+  CustomMinusToPlus = "customMinusToPlus",
 }
 
-enum AnimationRepeat {
+export enum AnimationRepeat {
   Infinite = "infinite",
   RepeatOnce = "repeat-1",
   RepeatTwice = "repeat-2",
   RepeatThrice = "repeat-3",
 }
 
-enum AnimationDelay {
+export enum AnimationDelay {
   OneSecond = "delay-1s",
   TwoSeconds = "delay-2s",
   ThreeSeconds = "delay-3s",
@@ -90,7 +92,7 @@ enum AnimationDelay {
   FiveSeconds = "delay-5s",
 }
 
-enum AnimationDuration {
+export enum AnimationDuration {
   Slow = "slow",
   Slower = "slower",
   Fast = "fast",
