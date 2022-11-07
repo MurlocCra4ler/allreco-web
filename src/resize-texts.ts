@@ -21,6 +21,7 @@ onresize$.subscribe(() => {
 
 function checkForOverflows(): void {
     Array.from(downloadTexts).forEach(downloadText => {
+        (downloadText as any).innerText = (downloadText as any).origText;
         const parent = downloadText.parentElement;
         if (parent && isOverflown(parent)) {
             resizeText(downloadText)

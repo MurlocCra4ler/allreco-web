@@ -400,7 +400,7 @@ function onToggle(event: Event) {
         Array.from(contentContainers).forEach(contentContainer => {
             element.activeAnimations += 1;
 
-            animateElement(contentContainer, new Animation(AnimationName.FadeOut, undefined, undefined, undefined, () => {
+            animateElement(contentContainer, new Animation(AnimationName.FadeOut, undefined, undefined, AnimationDuration.Faster, () => {
                 element.activeAnimations -= 1;
 
                 if (element.activeAnimations == 0) {
