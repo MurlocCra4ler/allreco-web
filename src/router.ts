@@ -12,14 +12,17 @@ const routes: Array<[string, string]> = [
     ['https://www.allreco.de/anwendungen/gewerbeabfall', 'https://www.allreco.de/en/application-areas/industrial-waste'],
     ['https://www.allreco.de/anwendungen/ersatzbrennstoffe', 'https://www.allreco.de/en/application-areas/refuse-derived-fuel'],
     ['https://www.allreco.de/anwendungen/baumischabfall', 'https://www.allreco.de/en/application-areas/mixed-construction-waste'],
-    ['https://www.allreco.de/anwendungen/deponieruckbau', 'https://www.allreco.de/en/landfill-mining'],
-    ['https://www.allreco.de/handlerdownloads', 'https://www.allreco.de/en/handlerdownloads'],
-    ['https://www.allreco.de/produktgruppenubersicht', 'https://www.allreco.de/en/produktgruppenubersicht'],
+    ['https://www.allreco.de/anwendungen/deponieruckbau', 'https://www.allreco.de/en/application-areas/landfill-mining'],
+    ['https://www.allreco.de/downloads', 'https://www.allreco.de/en/downloads'],
+    ['https://www.allreco.de/produktgruppen/ubersicht', 'https://www.allreco.de/en/product-groups/product-range-overview'],
     ['https://www.allreco.de/das-ist-allreco', 'https://www.allreco.de/en/this-is-allreco'],
     ['https://www.allreco.de/after-sales', 'https://www.allreco.de/en/after-sales'],
     ['https://www.allreco.de/news', 'https://www.allreco.de/en/news'],
+    ['https://www.allreco.de/termine', 'https://www.allreco.de/en/events'],
     ['https://www.allreco.de/kontakt', 'https://www.allreco.de/en/contact'],
     ['https://www.allreco.de/bst', 'https://www.allreco.de/en/bst'],
+    ['https://www.allreco.de/verfahrenstechnische-beratung', 'https://www.allreco.de/en/procedural-consulting'],
+    ['https://www.allreco.de/vertriebspartnersuche', 'https://www.allreco.de/en/distributor-search'],
     ['https://www.allreco.de/impressum', 'https://www.allreco.de/en/imprint']
 ];
 
@@ -56,6 +59,11 @@ function getRoute(lang: string, url: string): string {
                 return url.replace("products/", "produkte/");
             }
 
+            //special case for product-groups
+            if (url.includes("en/product-groups/")) {
+                return url.replace("en/product-groups/", "produktgruppen/");
+            }
+
             //special case for news
             element = document.getElementById('route-de');
             if (element) {
@@ -73,6 +81,11 @@ function getRoute(lang: string, url: string): string {
             //special case for products
             if (url.includes("produkte/")) {
                 return url.replace("produkte/", "products/");
+            }
+
+            //special case for product-groups
+            if (url.includes("produktgruppen/")) {
+                return url.replace("produktgruppen/", "en/product-groups/");
             }
 
             //special case for news
