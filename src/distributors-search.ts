@@ -132,12 +132,16 @@ Array.from(vendorContainers).forEach(vendorContainer => {
     const country = vendorContainer.getElementsByClassName("content-field-country")[0] as HTMLElement;
     const region = vendorContainer.getElementsByClassName("content-field-region")[0] as HTMLElement;
 
-    if (region.innerText !== "") {
+    const marketClass = market.innerText.replace(/ /g, '').replace(/&/g, '-');
+    const countryClass = country.innerText.replace(/ /g, '').replace(/&/g, '-');
+    const regionClass = region.innerText.replace(/ /g, '').replace(/&/g, '-');
+
+    if (regionClass !== "") {
         (vendorContainer.getElementsByClassName("region-header")[0] as HTMLElement).innerText = region.innerText;
         vendorContainer.classList.add("mix");
-        vendorContainer.classList.add(market.innerText);
-        vendorContainer.classList.add(country.innerText);
-        vendorContainer.classList.add(region.innerText);
+        vendorContainer.classList.add(marketClass);
+        vendorContainer.classList.add(countryClass);
+        vendorContainer.classList.add(regionClass);
     }
 
     vendors.push({
@@ -319,13 +323,18 @@ countrySelect.onchange = function () {
 
 regionSelect.onchange = function () {
     const region = regionSelect.getAttribute("value");
+    if (!region) {
+        console.error('regionSelect.onchange: regionSelect has no value');
+        return;
+    }
 
     Array.from($('.vendor-category-container')).forEach(element => {
         element.classList.remove('toggled');
     });
-    const collection = $('.vendor-content-container.' + region
-        + ', .vendor-category-container.' + region);
-    Array.from($('.vendor-category-container.' + region)).forEach(element => {
+    const search = region.replace(/ /g, '').replace(/&/g, '-');
+    const collection = $('.vendor-content-container.' + search
+        + ', .vendor-category-container.' + search);
+    Array.from($('.vendor-category-container.' + search)).forEach(element => {
         element.classList.add('toggled');
     });
     mixer.filter(collection);
