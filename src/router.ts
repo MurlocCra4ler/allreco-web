@@ -14,7 +14,7 @@ const routes: Array<[string, string]> = [
     ['https://www.allreco.de/anwendungen/baumischabfall', 'https://www.allreco.de/en/application-areas/mixed-construction-waste'],
     ['https://www.allreco.de/anwendungen/deponieruckbau', 'https://www.allreco.de/en/application-areas/landfill-mining'],
     ['https://www.allreco.de/downloads', 'https://www.allreco.de/en/downloads'],
-    ['https://www.allreco.de/produktgruppen/ubersicht', 'https://www.allreco.de/en/product-groups/product-range-overview'],
+    ['https://www.allreco.de/produktgruppen', 'https://www.allreco.de/en/product-groups'],
     ['https://www.allreco.de/das-ist-allreco', 'https://www.allreco.de/en/this-is-allreco'],
     ['https://www.allreco.de/after-sales', 'https://www.allreco.de/en/after-sales'],
     ['https://www.allreco.de/news', 'https://www.allreco.de/en/news'],
@@ -23,7 +23,13 @@ const routes: Array<[string, string]> = [
     ['https://www.allreco.de/bst', 'https://www.allreco.de/en/bst'],
     ['https://www.allreco.de/verfahrenstechnische-beratung', 'https://www.allreco.de/en/procedural-consulting'],
     ['https://www.allreco.de/vertriebspartnersuche', 'https://www.allreco.de/en/distributor-search'],
-    ['https://www.allreco.de/impressum', 'https://www.allreco.de/en/imprint']
+    ['https://www.allreco.de/impressum', 'https://www.allreco.de/en/imprint'],
+    ['https://www.allreco.de/login', 'https://www.allreco.de/en/login'],
+    ['https://www.allreco.de/signup', 'https://www.allreco.de/en/signup'],
+    ['https://www.allreco.de/passwort-reset', 'https://www.allreco.de/en/password-reset'],
+    ['https://www.allreco.de/passwort-reset-2', 'https://www.allreco.de/en/password-reset-2'],
+    ['https://www.allreco.de/passwort-reset-3', 'https://www.allreco.de/en/password-reset-3'],
+    ['https://www.allreco.de/haendler-passwort-reset', 'https://www.allreco.de/en/vendor-password-reset']
 ];
 
 const lang = getCookie('lang');
