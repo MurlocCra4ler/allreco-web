@@ -196,13 +196,51 @@ if (!tempContainer) {
     throw new Error('distributor-search: vendorCategoryContainers parent is missing');
 }
 
+const umlautMap: any = {
+    '\u00dc': 'UE',
+    '\u00c4': 'AE',
+    '\u00d6': 'OE',
+    '\u00fc': 'ue',
+    '\u00e4': 'ae',
+    '\u00f6': 'oe',
+    '\u00df': 'ss',
+  }
+  
+  function replaceUmlaute(str: string): string {
+    return str
+      .replace(/[\u00dc|\u00c4|\u00d6][a-z]/g, (a) => {
+        const big = umlautMap[a.slice(0, 1)];
+        return big.charAt(0) + big.charAt(1).toLowerCase() + a.slice(1);
+      })
+      .replace(new RegExp('['+Object.keys(umlautMap).join('|')+']',"g"),
+        (a) => umlautMap[a]
+      );
+  }
+
 vendorContainers = tempContainer.getElementsByClassName('vendor-content-container') as HTMLCollectionOf<HTMLElement>;
-let lastSize = vendorContainers.length;
-while (vendorContainers.length > 0) {
-    const element = vendorContainers[0].parentElement?.removeChild(vendorContainers[0]);
-    if (!element) {
-        throw new Error('distributor-search: vendorContainer parent is missing');
+const vendorArray = Array.from(vendorContainers).sort((a, b) => {
+    const countryA = replaceUmlaute((a.getElementsByClassName("content-field-country")[0] as HTMLElement).innerText);
+    const countryB = replaceUmlaute((b.getElementsByClassName("content-field-country")[0] as HTMLElement).innerText);
+    const regionA = replaceUmlaute((a.getElementsByClassName("content-field-region")[0] as HTMLElement).innerText);
+    const regionB = replaceUmlaute((b.getElementsByClassName("content-field-region")[0] as HTMLElement).innerText);
+
+    if (countryA !== countryB) {
+        return countryA < countryB ? -1 : 1;
     }
+
+    if (regionA !== regionB) {
+        return regionA < regionB ? -1 : 1;
+    }
+
+    return 0;
+});
+
+while (vendorArray.length > 0) {
+    const element = vendorArray.shift();
+    if (!element) {
+        throw new Error('distributor-search: element is undefined');
+    }
+    element.parentElement?.removeChild(element);
 
     const market = (element.getElementsByClassName("content-field-market")[0] as HTMLElement)
         .innerText.replace(/ /g, '').replace(/&/g, '-');
@@ -229,11 +267,6 @@ while (vendorContainers.length > 0) {
             break;
         }
     }
-    vendorContainers = tempContainer.getElementsByClassName('vendor-content-container') as HTMLCollectionOf<HTMLElement>;
-    if (lastSize == vendorContainers.length) {
-        throw new Error('distributor-search: failed to remove vendor from tempory container');
-    }
-    lastSize = vendorContainers.length;
 }
 
 const marketSelect = document.getElementById('marketSelect');
@@ -379,7 +412,7 @@ function onToggle(event: Event) {
         element.toggled = true;
         element.parentElement.classList.add("toggled");
         element.activeAnimations += 1;
-
+    
         animateElement(minus, new Animation(AnimationName.CustomPlusToMinus, undefined, undefined, AnimationDuration.Faster, () => {
             element.activeAnimations -= 1;
             minus.style.display = 'none';
@@ -392,7 +425,6 @@ function onToggle(event: Event) {
                 element.activeAnimations -= 1;
             }));
         });
-
     } else {
         element.activeAnimations += 1;
         minus.style.display = 'block';
@@ -418,7 +450,7 @@ function onToggle(event: Event) {
                 }
             }));
         });
-    }   
+    }
 }
 
 const vendorCategories = document.getElementsByClassName('vendor-category');
