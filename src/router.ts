@@ -7,7 +7,7 @@ const routes: Array<[string, string]> = [
     ['https://www.allreco.de/anwendungen/bioabfall', 'https://www.allreco.de/en/application-areas/biowaste'],
     ['https://www.allreco.de/anwendungen/grungut', 'https://www.allreco.de/en/application-areas/green-waste'],
     ['https://www.allreco.de/anwendungen/kompostsiebuberlauf', 'https://www.allreco.de/en/application-areas/compost-screen-oversize'],
-    ['https://www.allreco.de/anwendungen/biogut', 'https://www.allreco.de/en/application-areas/biodegradable-waste'],
+    ['https://www.allreco.de/anwendungen/biogut', 'https://www.allreco.de/en/application-areas/source-separated-organics'],
     ['https://www.allreco.de/anwendungen/restmull', 'https://www.allreco.de/en/application-areas/residual-waste'],
     ['https://www.allreco.de/anwendungen/gewerbeabfall', 'https://www.allreco.de/en/application-areas/industrial-waste'],
     ['https://www.allreco.de/anwendungen/ersatzbrennstoffe', 'https://www.allreco.de/en/application-areas/refuse-derived-fuel'],
